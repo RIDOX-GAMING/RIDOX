@@ -1,0 +1,56 @@
+{
+  "name": "ridox",
+  "version": "1.0.0",
+  "description": "RIDOX — طراحی اختصاصی پروفایل استیم و فروش سرویس‌های V2Ray",
+  "author": "RIDOX",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.ridox.desktop",
+    "productName": "RIDOX",
+    "copyright": "© RIDOX",
+    "asar": true,
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "index.html",
+      "main.js",
+      "preload.js",
+      "css/**/*",
+      "js/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] }
+      ],
+      "icon": "assets/favicon.png",
+      "artifactName": "RIDOX.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "RIDOX",
+      "artifactName": "RIDOX-Setup.${ext}"
+    }
+  }
+}
