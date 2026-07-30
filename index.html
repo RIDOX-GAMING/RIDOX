@@ -2,419 +2,232 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIDOX | V2Ray</title>
 <meta name="description" content="RIDOX - طراحی اختصاصی پروفایل استیم و فروش سرویس‌های V2Ray">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<meta name="theme-color" content="#d40000">
-<style>
-  
-  :root{
-    --bg:#070a10;
-    --bg-panel:#0b0f18;
-    --line:rgba(140,165,210,0.14);
-    --line-strong:rgba(140,165,210,0.3);
-    --blue:#26d3ff;
-    --orange:#ff6a26;
-    --text:#eef2f8;
-    --muted:#8790a3;
-    --muted-2:#4d5567;
-    --r:6px;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--bg);color:var(--text);font-family:'Vazirmatn',sans-serif;line-height:1.85;overflow-x:hidden;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  .wordmark{font-family:'Bebas Neue',sans-serif;letter-spacing:3px;}
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<meta name="theme-color" content="#07090d">
 
-  .bg-glow{
-    position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:
-      radial-gradient(700px 460px at 8% 0%, rgba(255,106,38,0.09), transparent 62%),
-      radial-gradient(760px 520px at 96% 10%, rgba(38,211,255,0.10), transparent 62%);
-  }
-  .orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none;
-    animation:float 16s ease-in-out infinite;will-change:transform;opacity:.7;}
-  .orb1{width:300px;height:300px;background:rgba(255,106,38,0.10);top:-60px;left:-60px;}
-  .orb2{width:340px;height:340px;background:rgba(38,211,255,0.10);bottom:-100px;right:-80px;animation-delay:-7s;}
-  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-24px);}}
-  @media (prefers-reduced-motion: reduce){.orb{animation:none;}html{scroll-behavior:auto;}}
-
-  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
-
-  /* ---- header ---- */
-  header{position:sticky;top:0;z-index:50;background:rgba(7,10,16,0.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
-  .logo{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:4px;color:var(--text);position:relative;}
-  .logo span{color:var(--orange);}
-  .nav-links{display:flex;gap:34px;}
-  .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14.5px;position:relative;padding-bottom:4px;transition:color .2s;}
-  .nav-links a::after{content:'';position:absolute;right:0;bottom:0;width:0;height:2px;background:var(--blue);transition:width .25s ease;}
-  .nav-links a:hover{color:var(--text);}
-  .nav-links a:hover::after{width:100%;}
-
-  /* ---- hero: asymmetric split ---- */
-  .hero{padding:88px 0 60px;}
-  .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:56px;align-items:center;}
-  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px;}}
-  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;color:var(--blue);font-weight:600;margin-bottom:22px;}
-  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange);animation:pulse 1.8s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  .hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;line-height:1.32;margin-bottom:20px;}
-  .hero h1 em{font-style:normal;color:var(--orange);}
-  .hero h1 i{font-style:normal;color:var(--blue);}
-  .hero p{color:var(--muted);font-size:17px;max-width:520px;margin-bottom:34px;}
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
-  .btn{font-family:'Vazirmatn',sans-serif;font-weight:700;font-size:15px;padding:14px 30px;border:none;cursor:pointer;
-    text-decoration:none;display:inline-flex;align-items:center;gap:8px;border-radius:var(--r);transition:filter .18s ease, transform .18s ease, background .18s ease;}
-  .btn:active{transform:scale(.98);}
-  .btn-primary{background:var(--orange);color:#070a10;}
-  .btn-primary:hover{background:#ff7c40;}
-  .btn-ghost{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1px var(--line-strong);}
-  .btn-ghost:hover{box-shadow:inset 0 0 0 1px var(--blue);color:var(--blue);}
-
-  .stat-panel{display:flex;flex-direction:column;}
-  .stat-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:20px 0;border-bottom:1px solid var(--line);}
-  .stat-row:first-child{padding-top:0;}
-  .stat-row:last-child{border-bottom:none;}
-  .stat-row .label{color:var(--muted);font-size:14px;font-weight:600;}
-  .stat-row .val{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;color:var(--text);white-space:nowrap;}
-  .stat-row .val.o{color:var(--orange);}
-  .stat-row .val.b{color:var(--blue);}
-
-  /* ---- section headers: left-anchored editorial ---- */
-  section.block{padding:80px 0;}
-  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:48px;
-    border-bottom:1px solid var(--line);padding-bottom:22px;flex-wrap:wrap;}
-  .sec-head .tag{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--orange);font-weight:700;display:block;margin-bottom:10px;}
-  .sec-head .tag.b{color:var(--blue);}
-  .sec-head h2{font-size:clamp(24px,3.4vw,34px);font-weight:800;}
-  .sec-head p{color:var(--muted);font-size:15px;max-width:380px;text-align:left;}
-  @media(max-width:760px){.sec-head{flex-direction:column;align-items:flex-start;}.sec-head p{text-align:right;}}
-
-  /* ---- steam explainer: asymmetric two column, spec-sheet style ---- */
-  .info-split{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;margin-bottom:70px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
-  @media(max-width:860px){.info-split{grid-template-columns:1fr;}}
-  .info-left{background:var(--bg-panel);padding:36px 32px;border-left:1px solid var(--line);}
-  @media(max-width:860px){.info-left{border-left:none;border-bottom:1px solid var(--line);}}
-  .info-right{padding:36px 32px;}
-  .info-left h3, .info-right h3{font-size:18px;font-weight:800;margin-bottom:18px;}
-  .info-right p{color:var(--muted);font-size:15px;margin-bottom:14px;}
-  .info-right p:last-child{margin-bottom:0;}
-  .req-row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;padding:16px 0;border-top:1px dashed var(--line);}
-  .req-row:first-of-type{border-top:none;padding-top:0;}
-  .req-row .idx{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--muted-2);}
-  .req-row .txt{font-size:15px;font-weight:600;}
-  .req-row .txt b{color:var(--blue);font-weight:800;}
-  .info-left .foot-note{margin-top:18px;color:var(--muted);font-size:13.5px;padding-top:16px;border-top:1px dashed var(--line);}
-
-  /* ---- pricing: stacked rows (spec-sheet / table feel) ---- */
-  .row-list{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
-  .price-row{display:grid;grid-template-columns:56px 1fr auto auto;gap:22px;align-items:center;
-    padding:26px 28px;border-top:1px solid var(--line);transition:background .2s ease;}
-  .price-row:first-child{border-top:none;}
-  .price-row:hover{background:rgba(140,165,210,0.035);}
-  .price-row .idx{font-family:'JetBrains Mono',monospace;color:var(--muted-2);font-size:15px;}
-  .price-row .info h4{font-size:17.5px;font-weight:800;margin-bottom:8px;}
-  .price-row .info h4 .pill{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;color:var(--orange);
-    border:1px solid rgba(255,106,38,0.4);border-radius:999px;padding:2px 10px;margin-right:10px;vertical-align:middle;}
-  .price-row .tags{display:flex;gap:8px;flex-wrap:wrap;}
-  .price-row .tags span{font-size:12.5px;color:var(--muted);background:rgba(140,165,210,0.06);border-radius:5px;padding:4px 10px;}
-  .price-row .price{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16.5px;color:var(--text);white-space:nowrap;text-align:left;}
-  .price-row .price small{display:block;font-size:11.5px;color:var(--muted);font-weight:500;font-family:'Vazirmatn',sans-serif;margin-top:3px;}
-  @media(max-width:760px){
-    .price-row{grid-template-columns:1fr;gap:14px;}
-    .price-row .idx{display:none;}
-    .price-row .price{text-align:right;}
-  }
-
-  .note-box{margin-top:30px;background:rgba(255,106,38,0.05);border:1px solid rgba(255,106,38,0.28);border-radius:var(--r);
-    padding:18px 22px;font-size:14px;color:var(--muted);}
-  .note-box b{color:var(--orange);font-weight:800;}
-
-  /* ---- v2ray: same row-list material for consistency ---- */
-  .v2-row{display:grid;grid-template-columns:44px 1fr auto auto;gap:22px;align-items:center;
-    padding:26px 28px;border-top:1px solid var(--line);transition:background .2s ease;}
-  .v2-row:first-child{border-top:none;}
-  .v2-row:hover{background:rgba(140,165,210,0.035);}
-  .v2-row .ic{font-size:22px;}
-  .v2-row h4{font-size:17.5px;font-weight:800;margin-bottom:6px;}
-  .v2-row .specs{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px;color:var(--muted);}
-  .v2-row .specs b{color:var(--text);font-family:'JetBrains Mono',monospace;font-weight:700;}
-  .v2-row .price{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16.5px;color:var(--blue);white-space:nowrap;text-align:left;}
-  .v2-row .price small{display:block;font-size:11.5px;color:var(--muted);font-weight:500;font-family:'Vazirmatn',sans-serif;margin-top:3px;}
-  @media(max-width:760px){
-    .v2-row{grid-template-columns:1fr;gap:12px;}
-    .v2-row .ic{display:none;}
-    .v2-row .price{text-align:right;}
-  }
-  .v2-custom-note{grid-column:1/-1;font-size:13px;color:var(--muted);background:rgba(38,211,255,0.05);
-    border:1px solid rgba(38,211,255,0.2);border-radius:var(--r);padding:11px 14px;margin-top:4px;}
-
-  .btn-sm{padding:10px 22px;font-size:14px;}
-
-  /* ---- footer ---- */
-  footer{border-top:1px solid var(--line);padding:40px 0;margin-top:30px;}
-  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-  .footer-row .logo{font-size:21px;}
-  footer p{color:var(--muted-2);font-size:13.5px;}
-  .footer-tg{color:var(--blue);text-decoration:none;font-weight:700;}
-
-  /* ---- modal ---- */
-  .modal-overlay{position:fixed;inset:0;background:rgba(4,6,10,0.78);backdrop-filter:blur(6px);
-    display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
-  .modal-overlay.open{display:flex;}
-  .modal{background:var(--bg-panel);border:1px solid var(--line-strong);border-top:3px solid var(--orange);
-    border-radius:var(--r);max-width:420px;width:100%;padding:34px 32px;text-align:center;animation:pop .22s ease;}
-  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-  .modal h3{font-size:19px;font-weight:800;margin-bottom:10px;}
-  .modal p{color:var(--muted);font-size:14px;margin-bottom:18px;}
-  .code-box{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line-strong);
-    border-radius:var(--r);padding:14px 16px;margin-bottom:16px;}
-  .code-box span{flex:1;font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;letter-spacing:5px;color:var(--blue);text-align:center;}
-  .copy-btn{background:rgba(38,211,255,0.1);border:1px solid rgba(38,211,255,0.3);color:var(--blue);border-radius:5px;
-    padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:background .2s;}
-  .copy-btn:hover{background:rgba(38,211,255,0.2);}
-  .tg-line{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14.5px;font-weight:700;
-    background:rgba(255,106,38,0.07);border:1px solid rgba(255,106,38,0.3);border-radius:var(--r);padding:12px;margin-bottom:10px;color:var(--text);}
-  .tg-line b{color:var(--orange);}
-  .custom-extra{font-size:13px;color:var(--muted);background:rgba(140,165,210,0.05);border:1px solid var(--line);
-    border-radius:var(--r);padding:10px 12px;margin-bottom:18px;}
-  .modal-close{margin-top:6px;background:transparent;border:1px solid var(--line-strong);color:var(--text);
-    border-radius:var(--r);padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Vazirmatn',sans-serif;
-    width:100%;transition:background .2s;}
-  .modal-close:hover{background:rgba(140,165,210,0.06);}
-
-  ::selection{background:rgba(38,211,255,0.35);}
-  :focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
-</style>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animation.css">
+<link rel="stylesheet" href="css/responsive.css">
 </head>
-<body>
+<body class="pre-load">
 
-<div class="bg-glow"></div>
+<a class="skip-link" href="#main">رفتن به محتوای اصلی</a>
+
+<!-- Electron custom titlebar (no-op / hidden in browser) -->
+<div class="titlebar">
+  <div class="titlebar-controls">
+    <button class="tb-btn tb-min" aria-label="کوچک‌ کردن پنجره" title="Minimize"></button>
+    <button class="tb-btn tb-max" aria-label="بزرگ کردن پنجره" title="Maximize"></button>
+    <button class="tb-btn tb-close" aria-label="بستن برنامه" title="Close"></button>
+  </div>
+</div>
+
+<!-- Page loader -->
+<div class="loader" aria-hidden="true">
+  <div class="loader-mark">RID<span>OX</span>
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<!-- Ambient background layers -->
+<div class="bg-mesh"></div>
+<div class="bg-grain"></div>
+<div class="mouse-light"></div>
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 
 <header>
   <div class="wrap nav">
-    <div class="logo">RID<span>OX</span></div>
-    <nav class="nav-links">
+    <a href="#top" class="logo" aria-label="RIDOX - بازگشت به بالا">
+      <img src="assets/favicon.png" alt="" width="28" height="28">
+      RID<span>OX</span>
+    </a>
+    <button class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="primaryNav">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <nav class="nav-links" id="primaryNav" aria-label="ناوبری اصلی">
       <a href="#steam">پروفایل استیم</a>
       <a href="#v2ray">فروش V2Ray</a>
     </nav>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow mono"><span class="dot"></span> IDENTITY_AND_CONNECTION</div>
-      <h1>RIDOX یعنی <em>پروفایل</em> و <i>اتصال</i> حرفه‌ای</h1>
-      <p>طراحی اختصاصی پروفایل استیم با آرت‌ورک رسمی و فروش سرویس‌های پرسرعت V2Ray؛ همه‌چیز در یک جا.</p>
-      <div class="hero-actions">
-        <a href="#steam" class="btn btn-primary">مشاهده کاستوم پروفایل</a>
-        <a href="#v2ray" class="btn btn-ghost">مشاهده سرویس‌های V2Ray</a>
-      </div>
-    </div>
-    <div class="stat-panel">
-      <div class="stat-row"><span class="label">حداقل لول استیم</span><span class="val o">۱۰+</span></div>
-      <div class="stat-row"><span class="label">هزینه کاستوم پروفایل</span><span class="val o">۱.۲ تا ۵M تومان</span></div>
-      <div class="stat-row"><span class="label">حجم سرویس V2Ray</span><span class="val b">۱۵ تا ۳۰GB</span></div>
-      <div class="stat-row"><span class="label">پشتیبانی سفارش</span><span class="val b">تلگرام</span></div>
-    </div>
-  </div>
-</section>
+<main id="main">
 
-<!-- ============ STEAM SECTION ============ -->
-<section class="block" id="steam">
-  <div class="wrap">
-    <div class="sec-head">
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
       <div>
-        <span class="tag mono">01 / STEAM</span>
-        <h2>کاستوم پروفایل استیم</h2>
-      </div>
-      <p>پروفایل استیم اولین چیزیه که بقیه بازیکن‌ها موقع باز کردن پروفایل شما می‌بینن. با طراحی اختصاصی، بک‌گراند، فریم آواتار، انیمیشن‌ها و چیدمان کلی پروفایل شما با آرت‌ورک‌های رسمی استیم بازسازی می‌شه و به یه اثر منحصربه‌فرد تبدیل می‌شه.</p>
-    </div>
-
-    <div class="info-split">
-      <div class="info-left">
-        <h3>شرایط دریافت کاستوم</h3>
-        <div class="req-row"><span class="idx">01</span><span class="txt">حداقل <b>لول ۱۰</b> استیم</span></div>
-        <div class="req-row"><span class="idx">02</span><span class="txt">حداقل <b>۵٬۰۰۰</b> پوینت در پوینت‌شاپ</span></div>
-        <div class="req-row"><span class="idx">03</span><span class="txt">دسترسی به پروفایل برای اعمال تغییرات</span></div>
-        <div class="foot-note">این حداقل‌ها برای این لازمن که امکانات کافی برای چیدمان یک پروفایل کامل (بک‌گراند + فریم + انیمیشن + شوکیس‌ها) در دسترس باشه.</div>
-      </div>
-      <div class="info-right">
-        <h3>آرت‌ورک استیم چیست؟</h3>
-        <p>آرت‌ورک استیم (Steam Artwork) به مجموعه تصاویر، انیمیشن‌ها و المان‌های گرافیکی گفته می‌شه که خود Valve برای هر بازی منتشر می‌کنه و داخل «پوینت شاپ» (Point Shop) در دسترس قرار می‌گیره؛ شامل بک‌گراند پروفایل، فریم آواتار، انیمیشن آواتار، بک‌گراند مینی‌پروفایل و افکت‌های خاص.</p>
-        <p>برای فعال‌سازی این المان‌ها روی پروفایل، به «پوینت‌های استیم» نیاز هست که با خرید یا فعالیت داخل استیم به دست میان. ما با ترکیب هوشمند این آرت‌ورک‌ها، یک ست کامل و هماهنگ برای پروفایل شما می‌چینیم که هم زیبا باشه و هم با سبک بازی‌هایی که انجام می‌دید همخونی داشته باشه.</p>
-      </div>
-    </div>
-
-    <div class="sec-head">
-      <div>
-        <span class="tag mono">02 / PRICING</span>
-        <h2>هزینه کاستوم پروفایل</h2>
-      </div>
-      <p>از ۱٬۲۰۰٬۰۰۰ تا ۵٬۰۰۰٬۰۰۰ تومان، متناسب با سطح شخصی‌سازی</p>
-    </div>
-
-    <div class="row-list">
-      <div class="price-row">
-        <span class="idx">01</span>
-        <div class="info">
-          <h4>پایه</h4>
-          <div class="tags"><span>بک‌گراند + فریم آواتار</span><span>ست‌بندی هماهنگ</span><span>آرت‌ورک محدودتر</span></div>
+        <div class="eyebrow mono"><span class="dot"></span> IDENTITY_AND_CONNECTION</div>
+        <h1>RIDOX یعنی <em>پروفایل</em> و <i>اتصال</i> حرفه‌ای</h1>
+        <p>طراحی اختصاصی پروفایل استیم با آرت‌ورک رسمی و فروش سرویس‌های پرسرعت V2Ray؛ همه‌چیز در یک جا.</p>
+        <div class="hero-actions">
+          <a href="#steam" class="btn btn-primary">مشاهده کاستوم پروفایل</a>
+          <a href="#v2ray" class="btn btn-ghost">مشاهده سرویس‌های V2Ray</a>
         </div>
-        <div class="price">۱٬۲۰۰٬۰۰۰<small>تا ۲٬۰۰۰٬۰۰۰ تومان</small></div>
-        <button class="btn btn-primary btn-sm" onclick="openCodeModal('steam')">خرید</button>
       </div>
-      <div class="price-row">
-        <span class="idx">02</span>
-        <div class="info">
-          <h4>حرفه‌ای <span class="pill">پرطرفدار</span></h4>
-          <div class="tags"><span>بک‌گراند متحرک</span><span>انیمیشن آواتار</span><span>طیف وسیع‌تر آرت‌ورک</span></div>
-        </div>
-        <div class="price">۲٬۰۰۰٬۰۰۰<small>تا ۳٬۵۰۰٬۰۰۰ تومان</small></div>
-        <button class="btn btn-primary btn-sm" onclick="openCodeModal('steam')">خرید</button>
-      </div>
-      <div class="price-row">
-        <span class="idx">03</span>
-        <div class="info">
-          <h4>پرمیوم</h4>
-          <div class="tags"><span>نایاب‌ترین آرت‌ورک‌ها</span><span>افکت پیشرفته</span><span>آزادی کامل طرح</span></div>
-        </div>
-        <div class="price">۳٬۵۰۰٬۰۰۰<small>تا ۵٬۰۰۰٬۰۰۰ تومان</small></div>
-        <button class="btn btn-primary btn-sm" onclick="openCodeModal('steam')">خرید</button>
+      <div class="stat-panel" role="table" aria-label="آمار خلاصه سرویس‌ها">
+        <div class="stat-row"><span class="label">حداقل لول استیم</span><span class="val o">۱۰+</span></div>
+        <div class="stat-row"><span class="label">هزینه کاستوم پروفایل</span><span class="val o">۱.۲ تا ۵M تومان</span></div>
+        <div class="stat-row"><span class="label">حجم سرویس V2Ray</span><span class="val b">۱۵ تا ۳۰GB</span></div>
+        <div class="stat-row"><span class="label">پشتیبانی سفارش</span><span class="val b">تلگرام</span></div>
       </div>
     </div>
+  </section>
 
-    <div class="note-box">
-      <b>توجه:</b> تمامی هزینه‌ها صرف پروفایل خودتان می‌شود و هیچ‌گونه دستمزد یا اجرتی دریافت نمی‌شود. هرچه هزینه انتخابی کمتر باشد، پروفایل‌های قابل انتخاب محدودتر خواهند بود.
-    </div>
-  </div>
-</section>
-
-<!-- ============ V2RAY SECTION ============ -->
-<section class="block" id="v2ray">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="tag b mono">03 / V2RAY</span>
-        <h2>فروش سرویس V2Ray</h2>
-      </div>
-      <p>سرویس‌های پرسرعت و پایدار با حجم و مدت‌زمان مشخص، یا کاملاً بر اساس نیاز شما</p>
-    </div>
-
-    <div class="row-list">
-      <div class="v2-row">
-        <span class="ic">🥈</span>
+  <!-- ============ STEAM SECTION ============ -->
+  <section class="block" id="steam" aria-labelledby="steamHeading">
+    <div class="wrap">
+      <div class="sec-head">
         <div>
-          <h4>نقره‌ای</h4>
-          <div class="specs">حجم <b>۱۵GB</b> مدت زمان <b>۱ ماهه</b></div>
+          <span class="tag mono">01 / STEAM</span>
+          <h2 id="steamHeading">کاستوم پروفایل استیم</h2>
         </div>
-        <div class="price">۵۰٬۰۰۰<small>تومان</small></div>
-        <button class="btn btn-primary btn-sm" onclick="openCodeModal('silver')">خرید</button>
+        <p>پروفایل استیم اولین چیزیه که بقیه بازیکن‌ها موقع باز کردن پروفایل شما می‌بینن. با طراحی اختصاصی، بک‌گراند، فریم آواتار، انیمیشن‌ها و چیدمان کلی پروفایل شما با آرت‌ورک‌های رسمی استیم بازسازی می‌شه و به یه اثر منحصربه‌فرد تبدیل می‌شه.</p>
       </div>
-      <div class="v2-row">
-        <span class="ic">🥇</span>
-        <div>
-          <h4>طلایی</h4>
-          <div class="specs">حجم <b>۳۰GB</b> مدت زمان <b>۲ ماهه</b></div>
+
+      <div class="info-split">
+        <div class="info-left">
+          <h3>شرایط دریافت کاستوم</h3>
+          <div class="req-row"><span class="idx">01</span><span class="txt">حداقل <b>لول ۱۰</b> استیم</span></div>
+          <div class="req-row"><span class="idx">02</span><span class="txt">حداقل <b>۵٬۰۰۰</b> پوینت در پوینت‌شاپ</span></div>
+          <div class="req-row"><span class="idx">03</span><span class="txt">دسترسی به پروفایل برای اعمال تغییرات</span></div>
+          <div class="foot-note">این حداقل‌ها برای این لازمن که امکانات کافی برای چیدمان یک پروفایل کامل (بک‌گراند + فریم + انیمیشن + شوکیس‌ها) در دسترس باشه.</div>
         </div>
-        <div class="price">۱۰۰٬۰۰۰<small>تومان</small></div>
-        <button class="btn btn-primary btn-sm" onclick="openCodeModal('gold')">خرید</button>
+        <div class="info-right">
+          <h3>آرت‌ورک استیم چیست؟</h3>
+          <p>آرت‌ورک استیم (Steam Artwork) به مجموعه تصاویر، انیمیشن‌ها و المان‌های گرافیکی گفته می‌شه که خود Valve برای هر بازی منتشر می‌کنه و داخل «پوینت شاپ» (Point Shop) در دسترس قرار می‌گیره؛ شامل بک‌گراند پروفایل، فریم آواتار، انیمیشن آواتار، بک‌گراند مینی‌پروفایل و افکت‌های خاص.</p>
+          <p>برای فعال‌سازی این المان‌ها روی پروفایل، به «پوینت‌های استیم» نیاز هست که با خرید یا فعالیت داخل استیم به دست میان. ما با ترکیب هوشمند این آرت‌ورک‌ها، یک ست کامل و هماهنگ برای پروفایل شما می‌چینیم که هم زیبا باشه و هم با سبک بازی‌هایی که انجام می‌دید همخونی داشته باشه.</p>
+        </div>
       </div>
-      <div class="v2-row">
-        <span class="ic">⚙️</span>
+
+      <div class="sec-head">
         <div>
-          <h4>شخصی‌سازی</h4>
-          <div class="specs">حجم <b>دلخواه</b> مدت زمان <b>دلخواه</b></div>
+          <span class="tag mono">02 / PRICING</span>
+          <h2>هزینه کاستوم پروفایل</h2>
         </div>
-        <div class="price">توافقی</div>
-        <button class="btn btn-primary btn-sm" onclick="openCodeModal('custom')">خرید</button>
-        <div class="v2-custom-note">حجم و مدت زمان رو خودتون مشخص می‌کنید؛ بعد از خرید، جزئیات رو براتون توضیح می‌دیم.</div>
+        <p>از ۱٬۲۰۰٬۰۰۰ تا ۵٬۰۰۰٬۰۰۰ تومان، متناسب با سطح شخصی‌سازی</p>
+      </div>
+
+      <div class="row-list">
+        <div class="price-row">
+          <span class="idx">01</span>
+          <div class="info">
+            <h4>پایه</h4>
+            <div class="tags"><span>بک‌گراند + فریم آواتار</span><span>ست‌بندی هماهنگ</span><span>آرت‌ورک محدودتر</span></div>
+          </div>
+          <div class="price">۱٬۲۰۰٬۰۰۰<small>تا ۲٬۰۰۰٬۰۰۰ تومان</small></div>
+          <button class="btn btn-primary btn-sm" data-order="steam">خرید</button>
+        </div>
+        <div class="price-row">
+          <span class="idx">02</span>
+          <div class="info">
+            <h4>حرفه‌ای <span class="pill">پرطرفدار</span></h4>
+            <div class="tags"><span>بک‌گراند متحرک</span><span>انیمیشن آواتار</span><span>طیف وسیع‌تر آرت‌ورک</span></div>
+          </div>
+          <div class="price">۲٬۰۰۰٬۰۰۰<small>تا ۳٬۵۰۰٬۰۰۰ تومان</small></div>
+          <button class="btn btn-primary btn-sm" data-order="steam">خرید</button>
+        </div>
+        <div class="price-row">
+          <span class="idx">03</span>
+          <div class="info">
+            <h4>پرمیوم</h4>
+            <div class="tags"><span>نایاب‌ترین آرت‌ورک‌ها</span><span>افکت پیشرفته</span><span>آزادی کامل طرح</span></div>
+          </div>
+          <div class="price">۳٬۵۰۰٬۰۰۰<small>تا ۵٬۰۰۰٬۰۰۰ تومان</small></div>
+          <button class="btn btn-primary btn-sm" data-order="steam">خرید</button>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <b>توجه:</b> تمامی هزینه‌ها صرف پروفایل خودتان می‌شود و هیچ‌گونه دستمزد یا اجرتی دریافت نمی‌شود. هرچه هزینه انتخابی کمتر باشد، پروفایل‌های قابل انتخاب محدودتر خواهند بود.
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- ============ V2RAY SECTION ============ -->
+  <section class="block" id="v2ray" aria-labelledby="v2rayHeading">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="tag b mono">03 / V2RAY</span>
+          <h2 id="v2rayHeading">فروش سرویس V2Ray</h2>
+        </div>
+        <p>سرویس‌های پرسرعت و پایدار با حجم و مدت‌زمان مشخص، یا کاملاً بر اساس نیاز شما</p>
+      </div>
+
+      <div class="row-list">
+        <div class="v2-row">
+          <span class="ic" aria-hidden="true">🥈</span>
+          <div>
+            <h4>نقره‌ای</h4>
+            <div class="specs">حجم <b>۱۵GB</b> مدت زمان <b>۱ ماهه</b></div>
+          </div>
+          <div class="price">۵۰٬۰۰۰<small>تومان</small></div>
+          <button class="btn btn-primary btn-sm" data-order="silver">خرید</button>
+        </div>
+        <div class="v2-row">
+          <span class="ic" aria-hidden="true">🥇</span>
+          <div>
+            <h4>طلایی</h4>
+            <div class="specs">حجم <b>۳۰GB</b> مدت زمان <b>۲ ماهه</b></div>
+          </div>
+          <div class="price">۱۰۰٬۰۰۰<small>تومان</small></div>
+          <button class="btn btn-primary btn-sm" data-order="gold">خرید</button>
+        </div>
+        <div class="v2-row">
+          <span class="ic" aria-hidden="true">⚙️</span>
+          <div>
+            <h4>شخصی‌سازی</h4>
+            <div class="specs">حجم <b>دلخواه</b> مدت زمان <b>دلخواه</b></div>
+          </div>
+          <div class="price">توافقی</div>
+          <button class="btn btn-primary btn-sm" data-order="custom">خرید</button>
+          <div class="v2-custom-note">حجم و مدت زمان رو خودتون مشخص می‌کنید؛ بعد از خرید، جزئیات رو براتون توضیح می‌دیم.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer>
   <div class="wrap footer-row">
     <div class="logo">RID<span>OX</span></div>
-    <p>ارتباط با ما در تلگرام: <a class="footer-tg" href="https://t.me/RIDOX_Neonguard" target="_blank" rel="noopener">@RIDOX_Neonguard</a></p>
+    <p>ارتباط با ما در تلگرام: <a class="footer-tg" href="https://t.me/RIDOX_Neonguard" target="_blank" rel="noopener noreferrer">@RIDOX_Neonguard</a></p>
     <p>© تمامی حقوق برای RIDOX محفوظ است.</p>
   </div>
 </footer>
 
 <!-- ============ MODAL ============ -->
-<div class="modal-overlay" id="modalOverlay">
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
   <div class="modal">
-    <h3>کد اختصاصی شما</h3>
+    <h3 id="modalTitle">کد اختصاصی شما</h3>
     <p>این کد مخصوص همین سفارش شماست. آن را کپی کرده و برای ما ارسال کنید.</p>
     <div class="code-box">
       <span id="genCode">-----</span>
-      <button class="copy-btn" onclick="copyCode()">کپی</button>
+      <button class="copy-btn" id="copyBtn" type="button">کپی</button>
     </div>
     <div class="tg-line">کد بالا را به این آیدی در تلگرام ارسال کنید: <b>@RIDOX_Neonguard</b></div>
     <div class="custom-extra" id="customExtra" style="display:none;">همچنین لطفاً مدت‌زمان مورد نظرتان و حجم بسته موردنیازتان را نیز همراه با کد برای ما ارسال کنید.</div>
-    <button class="modal-close" onclick="closeCodeModal()">بستن</button>
+    <button class="modal-close" id="modalCloseBtn" type="button">بستن</button>
   </div>
 </div>
 
-<script>
-  function generateCode(){
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-    let out = '';
-    for(let i=0;i<5;i++){
-      out += chars[Math.floor(Math.random()*chars.length)];
-    }
-    return out;
-  }
-
-  function openCodeModal(kind){
-    const code = generateCode();
-    document.getElementById('genCode').textContent = code;
-    document.getElementById('customExtra').style.display = (kind === 'custom') ? 'block' : 'none';
-    document.getElementById('modalOverlay').classList.add('open');
-  }
-
-  function closeCodeModal(){
-    document.getElementById('modalOverlay').classList.remove('open');
-  }
-
-  function copyCode(){
-    const code = document.getElementById('genCode').textContent;
-    const btn = event.currentTarget;
-    const done = () => { const old = btn.textContent; btn.textContent = 'کپی شد ✓'; setTimeout(()=>btn.textContent = old, 1500); };
-    if(navigator.clipboard && window.isSecureContext){
-      navigator.clipboard.writeText(code).then(done).catch(()=>fallbackCopy(code, done));
-    } else {
-      fallbackCopy(code, done);
-    }
-  }
-
-  function fallbackCopy(text, cb){
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
-    document.body.appendChild(ta); ta.focus(); ta.select();
-    try{ document.execCommand('copy'); }catch(e){}
-    document.body.removeChild(ta);
-    cb();
-  }
-
-  document.getElementById('modalOverlay').addEventListener('click', function(e){
-    if(e.target === this) closeCodeModal();
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeCodeModal();
-  });
-</script>
-
+<script src="js/app.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/particles.js"></script>
 </body>
 </html>
