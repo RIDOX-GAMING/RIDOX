@@ -1,0 +1,103 @@
+/* =========================================================
+   RIDOX — Responsive Stylesheet
+   Desktop → Tablet → Mobile
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Tablet (≤ 960px)
+--------------------------------------------------------- */
+@media (max-width: 960px){
+  .hero-grid{ grid-template-columns:1fr; gap:40px; }
+  .stat-panel{ order:-1; }
+  .info-split{ grid-template-columns:1fr; }
+  .info-left{ border-left:none; border-bottom:1px solid var(--glass-border); }
+  .nav-links{ gap:2px; }
+  .nav-links a{ padding:8px 12px; font-size:14px; }
+}
+
+/* ---------------------------------------------------------
+   Small tablet / large mobile (≤ 760px)
+--------------------------------------------------------- */
+@media (max-width: 760px){
+  .wrap{ padding:0 18px; }
+
+  .sec-head{ flex-direction:column; align-items:flex-start; }
+  .sec-head p{ text-align:right; }
+
+  .hero{ padding:calc(var(--header-h) + 40px) 0 44px; }
+  .hero h1{ font-size:clamp(28px, 8vw, 38px); }
+  .hero p{ font-size:15.5px; }
+  .hero-actions .btn{ flex:1; justify-content:center; }
+
+  section.block{ padding:60px 0; }
+
+  .price-row{ grid-template-columns:1fr; gap:14px; }
+  .price-row .idx{ display:none; }
+  .price-row .price{ text-align:right; }
+  .price-row button{ width:100%; justify-content:center; }
+
+  .v2-row{ grid-template-columns:1fr; gap:12px; }
+  .v2-row .ic{ display:none; }
+  .v2-row .price{ text-align:right; }
+  .v2-row button{ width:100%; justify-content:center; }
+
+  .footer-row{ flex-direction:column; text-align:center; }
+}
+
+/* ---------------------------------------------------------
+   Mobile (≤ 560px)
+--------------------------------------------------------- */
+@media (max-width: 560px){
+  .nav-links{
+    position:fixed; inset:auto 0 0 0; top:var(--header-h);
+    background:rgba(7,9,13,0.96); backdrop-filter:blur(20px);
+    flex-direction:column; align-items:stretch; gap:0;
+    padding:10px 18px 18px;
+    border-bottom:1px solid var(--glass-border);
+    transform:translateY(-8px); opacity:0; visibility:hidden;
+    transition:transform var(--dur-med) var(--ease-out), opacity var(--dur-med) var(--ease-out), visibility var(--dur-med);
+  }
+  .nav-links.open{ transform:translateY(0); opacity:1; visibility:visible; }
+  .nav-links a{ padding:14px 8px; border-bottom:1px solid var(--glass-border); border-radius:0; }
+  .nav-links a:last-child{ border-bottom:none; }
+
+  .nav-toggle{ display:flex; }
+
+  .eyebrow{ font-size:11.5px; }
+  .hero h1{ font-size:26px; }
+
+  .stat-panel{ padding:6px 18px; }
+  .stat-row{ padding:16px 0; }
+  .stat-row .val{ font-size:15.5px; }
+
+  .modal{ padding:28px 22px; }
+  .code-box span{ font-size:19px; letter-spacing:4px; }
+}
+
+/* ---------------------------------------------------------
+   Nav toggle (hidden by default; shown on mobile above)
+--------------------------------------------------------- */
+.nav-toggle{
+  display:none; width:40px; height:40px; border-radius:var(--r-sm);
+  background:var(--glass-fill); border:1px solid var(--glass-border);
+  align-items:center; justify-content:center; cursor:pointer;
+  color:var(--text);
+}
+.nav-toggle:hover{ background:var(--glass-fill-hover); }
+
+/* ---------------------------------------------------------
+   Very small devices (≤ 380px)
+--------------------------------------------------------- */
+@media (max-width: 380px){
+  .logo{ font-size:24px; }
+  .hero h1{ font-size:23px; }
+  .btn{ padding:12px 22px; font-size:14px; }
+}
+
+/* ---------------------------------------------------------
+   Desktop large (≥ 1400px) — a touch more breathing room
+--------------------------------------------------------- */
+@media (min-width: 1400px){
+  :root{ --max-w: 1280px; }
+  .hero h1{ font-size:58px; }
+}
