@@ -1,0 +1,63 @@
+name: Build & Release RIDOX APK
+
+# Triggers automatically whenever an Android version tag (e.g. android-v1.0.0)
+# is pushed. Uses a distinct prefix from the Windows exe workflow's tags
+# (v*.*.*) so pushing one tag never triggers both builds.
+# Also allows manual runs from the Actions tab for testing.
+on:
+  push:
+    tags:
+      - 'android-v*.*.*'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: RIDOX-A
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.7
+
+      - name: Build debug APK
+        run: gradle assembleDebug --no-daemon
+
+      - name: Rename primary artifact to RIDOX.apk
+        shell: bash
+        run: |
+          mkdir -p release-out
+          cp app/build/outputs/apk/debug/app-debug.apk release-out/RIDOX.apk
+          ls -la release-out
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RIDOX-android
+          path: RIDOX-A/release-out/RIDOX.apk
+
+      - name: Publish to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: RIDOX-A/release-out/RIDOX.apk
+          name: RIDOX ${{ github.ref_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
