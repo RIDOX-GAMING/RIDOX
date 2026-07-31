@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>RIDOX</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0c10;
+    --panel:#15171c;
+    --panel-2:#1c1f26;
+    --accent:#00e28a;
+    --accent-soft:rgba(0,226,138,0.12);
+    --danger:#ff5470;
+    --danger-soft:rgba(255,84,112,0.12);
+    --text:#f2f3f5;
+    --muted:#868c98;
+    --muted-2:#4b505c;
+    --line:rgba(255,255,255,0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg);color:var(--text);font-family:'Vazirmatn',sans-serif;
+    overflow:hidden;position:fixed;inset:0;
+    padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);
+  }
+  button{font-family:'Vazirmatn',sans-serif;}
+  input{font-family:'Vazirmatn',sans-serif;}
+  ::selection{background:var(--accent-soft);}
+
+  /* ===== APP SHELL ===== */
+  #app{height:100%;display:flex;flex-direction:column;position:relative;}
+  .screen{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .hidden{display:none !important;}
+
+  /* ===== AUTH SCREEN ===== */
+  #authScreen{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 28px;}
+  .auth-mark{width:64px;height:64px;border-radius:20px;background:var(--panel);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;margin-bottom:22px;position:relative;}
+  .auth-mark::before{content:'';width:26px;height:26px;border-radius:50%;border:3px solid var(--accent);}
+  .auth-mark::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:var(--accent);
+    animation:blink 1.6s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:.35;}}
+  .auth-title{font-size:26px;font-weight:800;letter-spacing:.5px;margin-bottom:6px;}
+  .auth-title span{color:var(--accent);}
+  .auth-sub{color:var(--muted);font-size:13.5px;margin-bottom:36px;text-align:center;}
+  .auth-form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:16px;}
+  .field{position:relative;}
+  .field input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:16px 16px;color:var(--text);font-size:15px;outline:none;transition:border-color .2s, background .2s;}
+  .field input:focus{border-color:var(--accent);background:var(--panel-2);}
+  .field label{position:absolute;top:-9px;right:14px;background:var(--bg);padding:0 6px;font-size:11.5px;color:var(--muted);}
+  .auth-btn{margin-top:6px;background:var(--accent);color:#03110b;border:none;border-radius:14px;padding:16px;
+    font-size:15px;font-weight:800;cursor:pointer;transition:transform .15s, filter .15s;box-shadow:0 10px 26px -10px rgba(0,226,138,0.55);}
+  .auth-btn:active{transform:scale(.97);}
+  .auth-note{margin-top:22px;color:var(--muted-2);font-size:12px;text-align:center;line-height:1.9;}
+  .auth-error{color:var(--danger);font-size:12.5px;text-align:center;min-height:16px;}
+
+  /* ===== TOP HEADER ===== */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 8px;flex-shrink:0;}
+  .topbar .hi{font-size:13px;color:var(--muted);}
+  .topbar .hi b{color:var(--text);font-weight:700;}
+  .topbar .brand{font-size:17px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:7px;}
+  .topbar .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 2s ease-in-out infinite;}
+  .topbar .brand span{color:var(--accent);}
+
+  .tab-page{padding:14px 20px 110px;animation:fadein .35s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .page-title{font-size:20px;font-weight:800;margin-bottom:4px;}
+  .page-desc{color:var(--muted);font-size:13px;margin-bottom:22px;}
+
+  /* ===== V2RAY CARDS ===== */
+  .plan-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:14px;
+    position:relative;overflow:hidden;opacity:0;transform:translateY(14px);animation:cardIn .5s ease forwards;}
+  .plan-card:nth-child(1){animation-delay:.02s;}
+  .plan-card:nth-child(2){animation-delay:.1s;}
+  .plan-card:nth-child(3){animation-delay:.18s;}
+  @keyframes cardIn{to{opacity:1;transform:translateY(0);}}
+  .plan-card.hot{border-color:rgba(0,226,138,0.4);}
+  .plan-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+  .plan-name{font-size:16.5px;font-weight:800;display:flex;align-items:center;gap:8px;}
+  .plan-badge{font-size:10px;font-weight:700;color:#03110b;background:var(--accent);border-radius:999px;padding:3px 9px;}
+  .plan-spec{display:flex;gap:18px;margin-bottom:18px;}
+  .plan-spec .item .k{font-size:11px;color:var(--muted);margin-bottom:4px;}
+  .plan-spec .item .v{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .plan-price-row{display:flex;align-items:center;justify-content:space-between;}
+  .plan-price .old{font-size:12px;color:var(--muted-2);text-decoration:line-through;margin-bottom:2px;}
+  .plan-price .new{font-size:19px;font-weight:800;color:var(--accent);}
+  .plan-price .new small{font-size:11px;color:var(--muted);font-weight:500;}
+  .buy-btn{background:var(--panel-2);border:1px solid var(--line);color:var(--text);border-radius:12px;
+    padding:11px 22px;font-size:13.5px;font-weight:700;cursor:pointer;transition:background .2s, border-color .2s, transform .15s;}
+  .buy-btn:active{transform:scale(.95);}
+  .plan-card.hot .buy-btn{background:var(--accent);color:#03110b;border-color:var(--accent);}
+  .plan-note{margin-top:14px;font-size:12px;color:var(--muted);background:rgba(255,255,255,0.03);border-radius:10px;padding:10px 12px;}
+
+  /* ===== STATUS CARDS ===== */
+  .srv-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px 20px;margin-bottom:14px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    opacity:0;transform:translateY(14px);animation:cardIn .5s ease forwards;}
+  .srv-card:nth-child(1){animation-delay:.02s;}
+  .srv-card:nth-child(2){animation-delay:.1s;}
+  .srv-card:nth-child(3){animation-delay:.18s;}
+  .srv-info{display:flex;align-items:center;gap:14px;}
+  .srv-flag{width:42px;height:42px;border-radius:12px;background:var(--panel-2);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+  .srv-name{font-size:15px;font-weight:800;margin-bottom:3px;}
+  .srv-sub{font-size:12px;color:var(--muted);}
+  .srv-sub.off{color:var(--danger);font-weight:700;}
+  .ping-ring{position:relative;width:56px;height:56px;flex-shrink:0;}
+  .ping-ring svg{width:100%;height:100%;transform:rotate(-90deg);}
+  .ping-ring circle{fill:none;stroke-width:5;}
+  .ping-ring .bg{stroke:var(--line);}
+  .ping-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .6s ease, stroke .6s ease;}
+  .ping-ring .val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;}
+  .ping-ring.off .fg{stroke:var(--danger);}
+  .off-x{width:56px;height:56px;border-radius:50%;background:var(--danger-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .off-x span{width:16px;height:2px;background:var(--danger);border-radius:2px;transform:rotate(45deg);position:relative;}
+  .off-x span::after{content:'';position:absolute;inset:0;background:var(--danger);border-radius:2px;transform:rotate(90deg);}
+
+  /* ===== ACCOUNT ===== */
+  .acc-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px 20px;margin-bottom:16px;
+    display:flex;align-items:center;gap:16px;}
+  .acc-avatar{width:56px;height:56px;border-radius:16px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0;}
+  .acc-name{font-size:17px;font-weight:800;margin-bottom:4px;}
+  .acc-sub{font-size:12.5px;color:var(--muted);}
+
+  .info-row{display:flex;justify-content:space-between;align-items:center;padding:15px 4px;border-top:1px dashed var(--line);}
+  .info-row:first-of-type{border-top:none;}
+  .info-row .k{font-size:13.5px;color:var(--muted);}
+  .info-row .v{font-size:13.5px;font-weight:700;}
+  .status-pill{font-size:11.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--danger-soft);color:var(--danger);}
+
+  .ref-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:16px;}
+  .ref-box .lbl{font-size:13.5px;font-weight:700;margin-bottom:12px;}
+  .ref-row{display:flex;gap:10px;}
+  .ref-row input{flex:1;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font-size:13.5px;outline:none;}
+  .ref-row input:focus{border-color:var(--accent);}
+  .ref-save{background:var(--accent-soft);color:var(--accent);border:1px solid rgba(0,226,138,0.3);border-radius:12px;
+    padding:0 18px;font-size:13px;font-weight:700;cursor:pointer;}
+  .ref-msg{font-size:11.5px;color:var(--accent);margin-top:10px;height:14px;}
+
+  .reset-link{display:block;text-align:center;margin-top:26px;color:var(--muted-2);font-size:12px;background:none;border:none;cursor:pointer;text-decoration:underline;}
+
+  /* ===== BOTTOM NAV ===== */
+  .bottom-nav{position:absolute;bottom:0;left:0;right:0;display:flex;background:rgba(21,23,28,0.92);
+    backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:10;}
+  .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;
+    color:var(--muted);cursor:pointer;padding:6px 0;position:relative;transition:color .2s;}
+  .nav-btn svg{width:22px;height:22px;}
+  .nav-btn span{font-size:10.5px;font-weight:600;}
+  .nav-btn.active{color:var(--accent);}
+  .nav-btn .ind{position:absolute;top:-11px;width:24px;height:3px;border-radius:3px;background:var(--accent);
+    opacity:0;transform:scaleX(0);transition:opacity .25s, transform .25s;}
+  .nav-btn.active .ind{opacity:1;transform:scaleX(1);}
+
+  /* ===== TOAST / SHEET ===== */
+  .sheet-overlay{position:absolute;inset:0;background:rgba(4,4,7,0.7);backdrop-filter:blur(4px);
+    display:flex;align-items:flex-end;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .25s;}
+  .sheet-overlay.open{opacity:1;pointer-events:auto;}
+  .sheet{width:100%;max-width:480px;background:var(--panel);border-radius:26px 26px 0 0;padding:26px 24px calc(28px + env(safe-area-inset-bottom));
+    transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.8,.25,1);border-top:1px solid var(--line);}
+  .sheet-overlay.open .sheet{transform:translateY(0);}
+  .sheet-handle{width:38px;height:4px;background:var(--muted-2);border-radius:3px;margin:0 auto 20px;}
+  .sheet h3{font-size:17px;font-weight:800;margin-bottom:8px;text-align:center;}
+  .sheet p{color:var(--muted);font-size:13px;text-align:center;margin-bottom:20px;}
+  .code-display{display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:14px;padding:14px 16px;margin-bottom:16px;}
+  .code-display span{flex:1;font-size:22px;font-weight:800;letter-spacing:6px;color:var(--accent);text-align:center;font-variant-numeric:tabular-nums;}
+  .code-copy{background:var(--accent-soft);border:1px solid rgba(0,226,138,0.3);color:var(--accent);border-radius:10px;
+    padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;}
+  .tg-box{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.04);
+    border-radius:14px;padding:13px;font-size:13.5px;font-weight:600;margin-bottom:14px;}
+  .tg-box b{color:var(--accent);}
+  .sheet-close{width:100%;background:none;border:1px solid var(--line);color:var(--text);border-radius:14px;
+    padding:14px;font-size:14px;font-weight:700;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== AUTH SCREEN ===================== -->
+  <div id="authScreen">
+    <div class="auth-mark"></div>
+    <div class="auth-title">RID<span>OX</span></div>
+    <div class="auth-sub">ساخت حساب لوکال — فقط همین یک‌بار</div>
+    <div class="auth-form">
+      <div class="field">
+        <label>نام کاربری</label>
+        <input type="text" id="regUsername" placeholder="مثلاً: ali_92" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>رمز عبور</label>
+        <input type="password" id="regPassword" placeholder="یک رمز انتخاب کنید">
+      </div>
+      <div class="auth-error" id="authError"></div>
+      <button class="auth-btn" id="createAccountBtn">ساخت حساب و ورود</button>
+    </div>
+    <div class="auth-note">اطلاعات فقط روی همین گوشی ذخیره می‌شه.<br>هیچ سروری در کار نیست و دفعات بعد نیازی به ورود دوباره نداری.</div>
+  </div>
+
+  <!-- ===================== MAIN APP ===================== -->
+  <div id="mainApp" class="hidden" style="height:100%;display:flex;flex-direction:column;">
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span>RID<span>OX</span></div>
+      <div class="hi">خوش اومدی، <b id="hiUsername">—</b></div>
+    </div>
+
+    <div class="screen">
+      <!-- ---- TAB: V2RAY ---- -->
+      <div class="tab-page" id="tab-v2ray">
+        <div class="page-title">سرویس‌های V2Ray</div>
+        <div class="page-desc">حجم و مدت مشخص، یا کاملاً بر اساس نیاز خودت</div>
+
+        <div class="plan-card">
+          <div class="plan-top">
+            <div class="plan-name">🥈 نقره‌ای</div>
+          </div>
+          <div class="plan-spec">
+            <div class="item"><div class="k">حجم</div><div class="v">15GB</div></div>
+            <div class="item"><div class="k">مدت</div><div class="v">1 ماهه</div></div>
+          </div>
+          <div class="plan-price-row">
+            <div class="plan-price"><div class="old">55٬000 تومان</div><div class="new">44٬000<small> تومان</small></div></div>
+            <button class="buy-btn" onclick="buyPlan('نقره‌ای')">خرید</button>
+          </div>
+        </div>
+
+        <div class="plan-card hot">
+          <div class="plan-top">
+            <div class="plan-name">🥇 طلایی پلاس <span class="plan-badge">پیشنهاد ویژه</span></div>
+          </div>
+          <div class="plan-spec">
+            <div class="item"><div class="k">حجم</div><div class="v">32GB</div></div>
+            <div class="item"><div class="k">مدت</div><div class="v">1 ماهه</div></div>
+          </div>
+          <div class="plan-price-row">
+            <div class="plan-price"><div class="old">100٬000 تومان</div><div class="new">78٬000<small> تومان</small></div></div>
+            <button class="buy-btn" onclick="buyPlan('طلایی پلاس')">خرید</button>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-top">
+            <div class="plan-name">⚙️ کاستوم</div>
+          </div>
+          <div class="plan-spec">
+            <div class="item"><div class="k">حجم</div><div class="v">دلخواه</div></div>
+            <div class="item"><div class="k">مدت</div><div class="v">دلخواه</div></div>
+          </div>
+          <div class="plan-price-row">
+            <div class="plan-price"><div class="new" style="color:var(--text);">توافقی</div></div>
+            <button class="buy-btn" onclick="buyPlan('کاستوم')">خرید</button>
+          </div>
+          <div class="plan-note">بعد از خرید، حجم و مدت‌زمان دلخواهت رو همراه با کد برامون بفرست.</div>
+        </div>
+      </div>
+
+      <!-- ---- TAB: STATUS ---- -->
+      <div class="tab-page hidden" id="tab-status">
+        <div class="page-title">وضعیت سرورها</div>
+        <div class="page-desc">پینگ به‌صورت لحظه‌ای هر ۴ ثانیه به‌روزرسانی می‌شه</div>
+
+        <div class="srv-card">
+          <div class="srv-info">
+            <div class="srv-flag">🇩🇪</div>
+            <div><div class="srv-name">GE23-1</div><div class="srv-sub">آلمان — فعال</div></div>
+          </div>
+          <div class="ping-ring" id="ring-ge">
+            <svg viewBox="0 0 56 56"><circle class="bg" cx="28" cy="28" r="24"></circle><circle class="fg" id="ringfg-ge" cx="28" cy="28" r="24"></circle></svg>
+            <div class="val" id="pingval-ge">--</div>
+          </div>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-info">
+            <div class="srv-flag">🇳🇱</div>
+            <div><div class="srv-name">NETH3-2</div><div class="srv-sub">هلند — فعال</div></div>
+          </div>
+          <div class="ping-ring" id="ring-nl">
+            <svg viewBox="0 0 56 56"><circle class="bg" cx="28" cy="28" r="24"></circle><circle class="fg" id="ringfg-nl" cx="28" cy="28" r="24"></circle></svg>
+            <div class="val" id="pingval-nl">--</div>
+          </div>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-info">
+            <div class="srv-flag">🇫🇷</div>
+            <div><div class="srv-name">FS-23-2</div><div class="srv-sub off">سرور خاموش است!</div></div>
+          </div>
+          <div class="off-x"><span></span></div>
+        </div>
+      </div>
+
+      <!-- ---- TAB: ACCOUNT ---- -->
+      <div class="tab-page hidden" id="tab-account">
+        <div class="page-title">اکانت من</div>
+        <div class="page-desc">اطلاعات حساب لوکال شما</div>
+
+        <div class="acc-card">
+          <div class="acc-avatar" id="accInitial">R</div>
+          <div>
+            <div class="acc-name" id="accUsername">—</div>
+            <div class="acc-sub">حساب لوکال روی این دستگاه</div>
+          </div>
+        </div>
+
+        <div class="acc-card" style="flex-direction:column;align-items:stretch;padding:8px 20px;">
+          <div class="info-row"><span class="k">وضعیت اشتراک</span><span class="status-pill">غیرفعال</span></div>
+          <div class="info-row"><span class="k">تعداد سفارش‌ها</span><span class="v" id="orderCount">0</span></div>
+        </div>
+
+        <div class="ref-box">
+          <div class="lbl">کد معرف (اختیاری)</div>
+          <div class="ref-row">
+            <input type="text" id="refInput" placeholder="در صورت داشتن کد وارد کن">
+            <button class="ref-save" onclick="saveReferral()">ثبت</button>
+          </div>
+          <div class="ref-msg" id="refMsg"></div>
+        </div>
+
+        <button class="reset-link" onclick="resetAccount()">بازنشانی حساب و ساخت حساب جدید</button>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-btn active" data-tab="v2ray" onclick="switchTab('v2ray')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.86a10 10 0 0 1 14 0"/><path d="M8.5 16.9a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg>
+        <span>V2Ray</span>
+        <span class="ind"></span>
+      </button>
+      <button class="nav-btn" data-tab="status" onclick="switchTab('status')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 8 12 10 18 14 6 16 12 21 12"/></svg>
+        <span>وضعیت</span>
+        <span class="ind"></span>
+      </button>
+      <button class="nav-btn" data-tab="account" onclick="switchTab('account')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>اکانت من</span>
+        <span class="ind"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== BUY SHEET ===================== -->
+  <div class="sheet-overlay" id="sheetOverlay">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3>کد سفارش شما</h3>
+      <p id="sheetPlanName">این کد مخصوص همین سفارشه. کپی کن و برامون بفرست.</p>
+      <div class="code-display">
+        <span id="orderCode">-----</span>
+        <button class="code-copy" onclick="copyCode()">کپی</button>
+      </div>
+      <div class="tg-box">ارسال به تلگرام: <b>@RIDOX_Neonguard</b></div>
+      <button class="sheet-close" onclick="closeSheet()">بستن</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var STORE_KEY = 'ridox_account';
+
+  function getAccount(){
+    try { return JSON.parse(localStorage.getItem(STORE_KEY)); } catch(e){ return null; }
+  }
+  function saveAccount(acc){
+    localStorage.setItem(STORE_KEY, JSON.stringify(acc));
+  }
+
+  function boot(){
+    var acc = getAccount();
+    if (acc && acc.username) {
+      enterApp(acc);
+    } else {
+      document.getElementById('authScreen').classList.remove('hidden');
+    }
+  }
+
+  document.getElementById('createAccountBtn').addEventListener('click', function(){
+    var u = document.getElementById('regUsername').value.trim();
+    var p = document.getElementById('regPassword').value;
+    var err = document.getElementById('authError');
+    if (u.length < 3) { err.textContent = 'نام کاربری باید حداقل ۳ کاراکتر باشه'; return; }
+    if (p.length < 4) { err.textContent = 'رمز عبور باید حداقل ۴ کاراکتر باشه'; return; }
+    err.textContent = '';
+    var acc = { username: u, password: p, referral: '', orders: 0, createdAt: Date.now() };
+    saveAccount(acc);
+    enterApp(acc);
+  });
+
+  function enterApp(acc){
+    document.getElementById('authScreen').classList.add('hidden');
+    document.getElementById('mainApp').classList.remove('hidden');
+    document.getElementById('hiUsername').textContent = acc.username;
+    document.getElementById('accUsername').textContent = acc.username;
+    document.getElementById('accInitial').textContent = acc.username.charAt(0).toUpperCase();
+    document.getElementById('orderCount').textContent = acc.orders || 0;
+    if (acc.referral) document.getElementById('refInput').value = acc.referral;
+    startPingLoop();
+  }
+
+  /* ---- tabs ---- */
+  function switchTab(name){
+    ['v2ray','status','account'].forEach(function(t){
+      document.getElementById('tab-'+t).classList.toggle('hidden', t !== name);
+    });
+    document.querySelectorAll('.nav-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-tab') === name);
+    });
+  }
+
+  /* ---- buy flow ---- */
+  var currentPlan = '';
+  function buyPlan(name){
+    currentPlan = name;
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+    var code = '';
+    for (var i=0;i<5;i++) code += chars[Math.floor(Math.random()*chars.length)];
+    document.getElementById('orderCode').textContent = code;
+    document.getElementById('sheetPlanName').textContent = 'سفارش پلن «' + name + '» — این کد رو کپی کن و برامون بفرست.';
+    document.getElementById('sheetOverlay').classList.add('open');
+
+    var acc = getAccount();
+    if (acc) { acc.orders = (acc.orders||0) + 1; saveAccount(acc); document.getElementById('orderCount').textContent = acc.orders; }
+  }
+  function closeSheet(){ document.getElementById('sheetOverlay').classList.remove('open'); }
+  document.getElementById('sheetOverlay').addEventListener('click', function(e){ if(e.target===this) closeSheet(); });
+
+  function copyCode(){
+    var code = document.getElementById('orderCode').textContent;
+    var ta = document.createElement('textarea');
+    ta.value = code; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+    var btn = event.currentTarget;
+    var old = btn.textContent;
+    btn.textContent = 'کپی شد ✓';
+    setTimeout(function(){ btn.textContent = old; }, 1400);
+  }
+
+  /* ---- referral ---- */
+  function saveReferral(){
+    var val = document.getElementById('refInput').value.trim();
+    var acc = getAccount();
+    if (!acc) return;
+    acc.referral = val;
+    saveAccount(acc);
+    var msg = document.getElementById('refMsg');
+    msg.textContent = val ? 'کد معرف ثبت شد ✓' : '';
+    setTimeout(function(){ msg.textContent=''; }, 2200);
+  }
+
+  /* ---- reset ---- */
+  function resetAccount(){
+    localStorage.removeItem(STORE_KEY);
+    location.reload();
+  }
+
+  /* ---- live ping simulation ---- */
+  var RING_R = 24, RING_C = 2 * Math.PI * RING_R;
+  function setRing(fgId, valId, ping, min, max){
+    var fg = document.getElementById(fgId);
+    var el = document.getElementById(valId);
+    fg.style.strokeDasharray = RING_C;
+    var ratio = 1 - Math.min(1, Math.max(0, (ping - min) / (max - min + 1)));
+    var offset = RING_C * (1 - (0.25 + ratio * 0.65));
+    fg.style.strokeDashoffset = offset;
+    el.textContent = ping;
+  }
+  function tickPings(){
+    var ge = Math.floor(90 + Math.random() * (133-90));
+    var nl = Math.floor(101 + Math.random() * (113-101));
+    setRing('ringfg-ge','pingval-ge', ge, 90, 133);
+    setRing('ringfg-nl','pingval-nl', nl, 101, 113);
+  }
+  var pingTimer = null;
+  function startPingLoop(){
+    if (pingTimer) return;
+    tickPings();
+    pingTimer = setInterval(tickPings, 4000);
+  }
+
+  boot();
+</script>
+
+</body>
+</html>
