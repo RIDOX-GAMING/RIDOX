@@ -1,0 +1,15 @@
+node_modules/
+dist/
+release-out/
+*.log
+.DS_Store
+Thumbs.db
+
+# Android (RIDOX-A)
+RIDOX-A/app/build/
+RIDOX-A/release-out/
+RIDOX-A/.gradle/
+RIDOX-A/local.properties
+RIDOX-A/*.iml
+RIDOX-A/.idea/
+
