@@ -37,7 +37,7 @@
 
 ### 📱 Android
 
-[![Download for Android](https://img.shields.io/badge/DOWNLOAD_APK-3DDC84?style=for-the-badge&logo=android&logoColor=white)]([https://ridox-gaming.github.io/RIDOX/](https://github.com/RIDOX-GAMING/RIDOX/releases/download/v1.1.1/RIDOX.apk))
+[![Download for Android](https://img.shields.io/badge/DOWNLOAD_APK-3DDC84?style=for-the-badge&logo=android&logoColor=white)]([https://ridox-gaming.github.io/RIDOX/](https://github.com/RIDOX-GAMING/RIDOX/releases/download/v1.1.1/RIDOX.apk)
 
 <sub>⚡ Click the button above to download</sub>
 
